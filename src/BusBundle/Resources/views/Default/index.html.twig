@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="BusApplication">
+<head>
+    <meta charset="UTF-8">
+    <title>Rozklad jazdy</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body ng-controller="BusController" ng-init="pobierzPrzystanki()">
+    <div class="container" style="margin-top: 30px">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">Wyszukaj przystanek</div>
+                    <div class="panel-footer">
+                        <input class="form-control" type="text" name="przystanek" ng-model="przystanek" ng-keyup="szukajPrzystanku()" />
+                    </div>
+                    <div class="panel-footer">
+                        <p class="przystanek" ng-repeat="(index, przyst) in przystanki" ng-click="pobierzOdjazdy(przyst.id)"><% przyst.name %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="panel panel-default" ng-show="nazwaPrzystanku">
+                    <div class="panel-body">
+                        <p class="header">Przystanek autobusowy: <span ng-bind="nazwaPrzystanku" class="badge"></span></p>
+                        <table style="width: 100%; margin: auto" class="table">
+                            <tr>
+                                <td colspan="3" class="header">Najblizsze odjazdy</td>
+                            </tr>
+                            <tr ng-repeat="(index, odjazd) in najblizszeOdjazdy">
+                                <td><% odjazd.endpoint %></td>
+                                <td><% odjazd.busLine %></td>
+                                <td><% odjazd.departureTime %></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="js/BusApplication.js"></script>
+    <script src="js/BusController.js"></script>
+</body>
+</html>
